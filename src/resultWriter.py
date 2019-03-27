@@ -17,4 +17,5 @@ def saveSchedule(location, name, schedule, mode=False):
             if not mode:
                 file.write('    '*2+str(num2+1)+'. ' + tmp2.get_lesson().get_name()+'\n')
             else:
-                file.write('    '*2+str(num2+1)+'. '+tmp2[1].get_name()+tmp2[0].get_name()+'\n')
+                if not tmp2: continue
+                file.write('    '*2+str(num2+1)+'. '+tmp2[1].get_name()+' '+tmp2[0].get_name()+'\n')

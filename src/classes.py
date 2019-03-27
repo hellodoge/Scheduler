@@ -1,4 +1,4 @@
-from copy import copy
+from copy import deepcopy
 
 
 class Container:
@@ -66,10 +66,10 @@ class Teacher:
         return self.__name
 
     def backup_schedule_save(self):
-        self.__schedule_backup = copy(self.__schedule)
+        self.__schedule_backup = deepcopy(self.__schedule)
 
     def backup_schedule_load(self):
-        self.__schedule = copy(self.__schedule_backup)
+        self.__schedule = self.__schedule_backup
 
     def __repr__(self):
         return f'{self.__name}'

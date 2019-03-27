@@ -1,4 +1,3 @@
-from copy import deepcopy
 from math import ceil
 from random import shuffle
 
@@ -33,9 +32,9 @@ def compose_class(current_class):
 
 def calculate_number_of_lessons_per_day(current_class):
     if not current_class.get_number_of_days() - len(current_class.get_schedule()):
-        return current_class.get_number_of_days()
+        return current_class.calculate_number_of_lesson()
     else:
-        return ceil(current_class.get_number_of_days()/(current_class.get_number_of_days()-len(current_class.get_schedule())))
+        return ceil(current_class.calculate_number_of_lesson()/(current_class.get_number_of_days()-len(current_class.get_schedule())))
 
 
 def compose_lesson(current_class):
@@ -65,11 +64,13 @@ if __name__ == '__main__':
     print('TEST...')
     math = Lesson("Mathematics")
     rus = Lesson("Russian")
+    kz = Lesson("KZKZKZ")
     tea1 = Teacher("Nina", [math])
     tea2 = Teacher("Boris", [rus])
-    teacher_list = [tea1, tea2]
-    class1 = Class("1A", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2)], 5)
-    class2 = Class("1B", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2)], 5)
+    tea3 = Teacher("TEA3", [kz])
+    teacher_list = [tea1, tea2, tea3]
+    class1 = Class("1A", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(kz, 5, tea3)], 5)
+    class2 = Class("1B", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(kz, 5, tea3)], 5)
     class_list = [class1, class2]
     compose(class_list, teacher_list)
     print(class1.get_schedule())
