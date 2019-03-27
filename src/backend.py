@@ -10,6 +10,7 @@ def compose(class_list, teacher_list):
             tmp_teacher.backup_schedule_save()
         while not compose_class(current_class):
             current_class.backup_lessons()
+            current_class.clear_schedule()
             for tmp_teacher in teacher_list:
                 tmp_teacher.backup_schedule_load()
 
@@ -64,13 +65,13 @@ if __name__ == '__main__':
     print('TEST...')
     math = Lesson("Mathematics")
     rus = Lesson("Russian")
-    kz = Lesson("KZKZKZ")
+    ph = Lesson("Physics")
     tea1 = Teacher("Nina", [math])
     tea2 = Teacher("Boris", [rus])
-    tea3 = Teacher("TEA3", [kz])
+    tea3 = Teacher("Zheka", [ph])
     teacher_list = [tea1, tea2, tea3]
-    class1 = Class("1A", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(kz, 5, tea3)], 5)
-    class2 = Class("1B", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(kz, 5, tea3)], 5)
+    class1 = Class("1A", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(ph, 5, tea3)], 5)
+    class2 = Class("1B", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(ph, 5, tea3)], 5)
     class_list = [class1, class2]
     compose(class_list, teacher_list)
     print(class1.get_schedule())

@@ -32,6 +32,9 @@ class Class:
     def get_schedule(self):
         return self.__schedule
 
+    def clear_schedule(self):
+        self.__schedule.clear()
+
     def get_number_of_days(self):
         return self.__number_of_days
 
@@ -69,7 +72,7 @@ class Teacher:
         self.__schedule_backup = deepcopy(self.__schedule)
 
     def backup_schedule_load(self):
-        self.__schedule = self.__schedule_backup
+        self.__schedule = deepcopy(self.__schedule_backup)
 
     def __repr__(self):
         return f'{self.__name}'

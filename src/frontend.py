@@ -146,7 +146,10 @@ class DialogClass(QtWidgets.QDialog,design_class.Ui_DialogClass):
             self.comboImport.addItem(tmp.get_name())
 
     def import_class(self):
-        pass
+        if self.comboImport.currentText():
+            for tmp in container.get_classes()[self.comboImport.currentIndex()].get_lesson_list():
+                self.lessons.append(copy(tmp))
+            self.print_lesson()
 
     def save_class(self):
         if not (len(self.lessons) and self.nameEdit.text() and self.spinDays.value()):
