@@ -1,5 +1,6 @@
 from math import ceil
 from random import shuffle
+from src.config import Configuration
 
 from src.classes import Class, ClassLesson, Lesson, Teacher
 
@@ -15,10 +16,11 @@ def compose(class_list, teacher_list):
                 tmp_teacher.backup_schedule_load()
 
 
-
 def compose_class(current_class):
     for tmp in range(current_class.get_number_of_days()):
         current_class.get_schedule().append([])
+        if current_class.is_second_shift():
+            current_class.get_schedule()[-1] = [None]*Configuration.number_of_lessons_before_second_shift
         for tmp2 in range(calculate_number_of_lessons_per_day(current_class)):
             best_lesson = compose_lesson(current_class)
             if best_lesson is not None:

@@ -17,11 +17,12 @@ class Container:
         return self.__lessons
 
 class Class:
-    def __init__(self, name, lesson_list, number_of_days):
+    def __init__(self, name, lesson_list, number_of_days, second_shift=False):
         self.__schedule = []
         self.__name = name
         self.__lesson_list = lesson_list
         self.__number_of_days = number_of_days
+        self.__second_shift = second_shift
 
     def calculate_number_of_lesson(self):
         tmp = 0
@@ -43,6 +44,9 @@ class Class:
 
     def get_name(self):
         return self.__name
+
+    def is_second_shift(self):
+        return self.__second_shift
 
     def __repr__(self):
         return f'Class {self.__name}'

@@ -6,8 +6,9 @@ from PyQt5 import QtWidgets
 from src.backend import compose
 from src.resultWriter import save
 
-from src.design import design_main, design_lesson, design_teacher, design_class, design_author
+from src.design import design_main, design_lesson, design_teacher, design_class, design_author, design_config
 from src.classes import Container, Lesson, ClassLesson, Teacher, Class
+from src.config import Configuration
 
 container = Container()
 
@@ -21,6 +22,7 @@ class MainWindow(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         self.pushClass.clicked.connect(self.class_edit)
         self.pushSchedule.clicked.connect(self.produce)
         self.pushAuthor.clicked.connect(self.show_autor)
+        self.pushConfig.clicked.connect(self.configure)
 
     def lesson_edit(self):
         DialogLesson().exec()
@@ -33,6 +35,9 @@ class MainWindow(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
 
     def show_autor(self):
         DialogAuthor().exec()
+
+    def configure(self):
+        DialogConfig().exec()
 
     def produce(self):
         compose(container.get_classes(), container.get_teachers())
@@ -154,7 +159,7 @@ class DialogClass(QtWidgets.QDialog,design_class.Ui_DialogClass):
     def save_class(self):
         if not (len(self.lessons) and self.nameEdit.text() and self.spinDays.value()):
             return
-        container.get_classes().append(Class(self.nameEdit.text(), copy(self.lessons), self.spinDays.value()))
+        container.get_classes().append(Class(self.nameEdit.text(), copy(self.lessons), self.spinDays.value(), self.checkShift.checkState()))
         self.lessons.clear()
         self.print_lesson()
         self.update_import()
@@ -172,10 +177,25 @@ class DialogClass(QtWidgets.QDialog,design_class.Ui_DialogClass):
         self.update_import()
         self.update_delete()
 
+
+class DialogConfig(QtWidgets.QDialog,design_config.Ui_DialogConfig):
+    def __init__(self):
+        super().__init__()
+        self.setupUi(self)
+        self.pushSave.clicked.connect(self.save_config)
+        self.spinLesson.setValue(Configuration.number_of_lessons_before_second_shift)
+
+    def save_config(self):
+        if self.spinLesson.value():
+            Configuration.number_of_lessons_before_second_shift = self.spinLesson.value()
+            self.close()
+
+
 class DialogAuthor(QtWidgets.QDialog,design_author.Ui_DialogAuthor):
     def __init__(self):
         super().__init__()
         self.setupUi(self)
+
 
 if __name__ == '__main__':
     app = QtWidgets.QApplication(sys.argv)

@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Form implementation generated from reading ui file 'design_main.ui'
+# Form implementation generated from reading ui file '/home/waldemar/PycharmProjects/Scheduler/src/design/design_main.ui'
 #
 # Created by: PyQt5 UI code generator 5.11.3
 #
@@ -11,9 +11,9 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.resize(534, 297)
+        MainWindow.resize(539, 297)
         icon = QtGui.QIcon()
-        icon.addPixmap(QtGui.QPixmap("media/icon0.svg"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
+        icon.addPixmap(QtGui.QPixmap("media/icon0.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
         MainWindow.setWindowIcon(icon)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
@@ -68,21 +68,24 @@ class Ui_MainWindow(object):
         self.pushSchedule.setFlat(True)
         self.pushSchedule.setObjectName("pushSchedule")
         self.verticalLayout.addWidget(self.pushSchedule)
-        self.pushSave = QtWidgets.QPushButton(self.layoutWidget)
-        self.pushSave.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
-        self.pushSave.setFocusPolicy(QtCore.Qt.NoFocus)
-        self.pushSave.setAutoFillBackground(False)
+        self.pushConfig = QtWidgets.QPushButton(self.layoutWidget)
+        self.pushConfig.setCursor(QtGui.QCursor(QtCore.Qt.PointingHandCursor))
+        self.pushConfig.setFocusPolicy(QtCore.Qt.NoFocus)
+        self.pushConfig.setAutoFillBackground(False)
         icon5 = QtGui.QIcon()
         icon5.addPixmap(QtGui.QPixmap("media/icon5.png"), QtGui.QIcon.Normal, QtGui.QIcon.Off)
-        self.pushSave.setIcon(icon5)
-        self.pushSave.setFlat(True)
-        self.pushSave.setObjectName("pushSave")
-        self.verticalLayout.addWidget(self.pushSave)
+        self.pushConfig.setIcon(icon5)
+        self.pushConfig.setFlat(True)
+        self.pushConfig.setObjectName("pushConfig")
+        self.verticalLayout.addWidget(self.pushConfig)
         self.pushAuthor = QtWidgets.QPushButton(self.centralwidget)
         self.pushAuthor.setGeometry(QtCore.QRect(440, 260, 87, 29))
         self.pushAuthor.setDefault(False)
         self.pushAuthor.setFlat(False)
         self.pushAuthor.setObjectName("pushAuthor")
+        self.label = QtWidgets.QLabel(self.centralwidget)
+        self.label.setGeometry(QtCore.QRect(210, 180, 341, 111))
+        self.label.setObjectName("label")
         MainWindow.setCentralWidget(self.centralwidget)
 
         self.retranslateUi(MainWindow)
@@ -95,6 +98,12 @@ class Ui_MainWindow(object):
         self.pushTeacher.setText(_translate("MainWindow", "Добавить учителей"))
         self.pushClass.setText(_translate("MainWindow", "Добавить классы"))
         self.pushSchedule.setText(_translate("MainWindow", "Генерировать расписание"))
-        self.pushSave.setText(_translate("MainWindow", "Сохранить расписание"))
+        self.pushConfig.setText(_translate("MainWindow", "Настройки"))
         self.pushAuthor.setText(_translate("MainWindow", "Автор"))
+        self.label.setText(_translate("MainWindow", "Татьяна3000 позволит вам автоматически составить\n"
+"школьное расписание для каждого класса и сохранить\n"
+"его в удобной для учеников и учителей форме. \n"
+"От вас потребуется лишь занести настройки в \n"
+"соответствующие поля, а остальное \n"
+"сделает алгоритм программы."))
 
