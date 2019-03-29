@@ -89,8 +89,12 @@ class DialogTeacher(QtWidgets.QDialog,design_teacher.Ui_DialogTeacher):
             self.listView.addItem(f'{tmp.get_name()}: {"; ".join([tmp2.get_name() for tmp2 in tmp.get_lesson_list()])}')
 
     def add_teacher(self):
+        if self.comboBox.currentText() is None: return
         if not self.lineEdit.text():
-            return
+            if self.listView.currentItem() is None: return
+            tmp_teacher = container.get_teachers()[self.listView.currentIndex().row()]
+            if self.comboBox.currentText() not in [tmp.get_name() for tmp in tmp_teacher.get_lesson_list()]:
+                tmp_teacher.get_lesson_list().append(container.get_lessons()[self.comboBox.currentIndex()])
         elif self.lineEdit.text() not in [tmp.get_name() for tmp in container.get_teachers()]:
             container.get_teachers().append(Teacher(self.lineEdit.text(), [container.get_lessons()[self.comboBox.currentIndex()]]))
         else:
