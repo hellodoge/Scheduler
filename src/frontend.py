@@ -4,10 +4,10 @@ from copy import copy
 from PyQt5 import QtWidgets
 
 from src.backend import compose
-from src.resultWriter import save
+from src.export import save
 
 from src.design import design_main, design_lesson, design_teacher, design_class, design_author, design_config
-from src.classes import Container, Lesson, ClassLesson, Teacher, Class
+from src.classes import Container, Lesson, LessonOfClass, Teacher, Class
 from src.config import Configuration
 
 container = Container()
@@ -40,7 +40,14 @@ class MainWindow(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
         DialogConfig().exec()
 
     def produce(self):
-        compose(container.get_classes(), container.get_teachers())
+        container.clear_schedule()
+        while True:
+            try:
+                compose(container.get_classes(), container.get_teachers())
+                break
+            except KeyboardInterrupt:
+                print("Interrupted, restart")
+                container.clear_schedule()
         save(QtWidgets.QFileDialog.getExistingDirectory(self, "Выберите папку"),container.get_classes(),container.get_teachers())
 
 
@@ -135,7 +142,7 @@ class DialogClass(QtWidgets.QDialog,design_class.Ui_DialogClass):
         if self.comboLesson.currentText() in [tmp.get_lesson().get_name() for tmp in self.lessons]:
             self.lessons.remove(list(filter(lambda tmp: tmp.get_lesson().get_name() == self.comboLesson.currentText(), self.lessons))[0])
         if not self.spinLesson.value(): return
-        self.lessons.append(ClassLesson(list(filter(lambda tmp: tmp.get_name() == self.comboLesson.currentText(), container.get_lessons()))[0], self.spinLesson.value(), container.get_teachers()[self.comboTeacher.currentIndex()]))
+        self.lessons.append(LessonOfClass(list(filter(lambda tmp: tmp.get_name() == self.comboLesson.currentText(), container.get_lessons()))[0], self.spinLesson.value(), container.get_teachers()[self.comboTeacher.currentIndex()]))
         self.print_lesson()
 
     def update_teacher(self):

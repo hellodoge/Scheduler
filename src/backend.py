@@ -2,7 +2,7 @@ from math import ceil
 from random import shuffle
 from src.config import Configuration
 
-from src.classes import Class, ClassLesson, Lesson, Teacher
+from src.classes import Class, LessonOfClass, Lesson, Teacher
 
 
 def compose(class_list, teacher_list):
@@ -10,6 +10,7 @@ def compose(class_list, teacher_list):
         for tmp_teacher in teacher_list:
             tmp_teacher.backup_schedule_save()
         while not compose_class(current_class):
+            print("Failed scheduling attempt for " + current_class.get_name())
             current_class.backup_lessons()
             current_class.clear_schedule()
             for tmp_teacher in teacher_list:
@@ -27,10 +28,7 @@ def compose_class(current_class):
                 current_class.get_schedule()[-1].append(best_lesson)
                 best_lesson.dec_number_per_week()
                 best_lesson.get_teacher().get_schedule()[len(current_class.get_schedule())-1][len(current_class.get_schedule()[-1])-1] = [current_class, best_lesson.get_lesson()]
-    if current_class.calculate_number_of_lesson():
-        return False
-    else:
-        return True
+    return False if current_class.calculate_number_of_lesson() else True
 
 
 def calculate_number_of_lessons_per_day(current_class):
@@ -54,6 +52,10 @@ def compose_lesson(current_class):
         if lesson.get_teacher().get_schedule()[len(current_class.get_schedule())-1][len(current_class.get_schedule()[-1])]:
             continue
         lesson_list.append(lesson)
+    return choose_best_lesson(lesson_list)
+
+
+def choose_best_lesson(lesson_list):
     tmp = 0
     best_lesson = None
     for lesson in lesson_list:
@@ -72,8 +74,8 @@ if __name__ == '__main__':
     tea2 = Teacher("Boris", [rus])
     tea3 = Teacher("Zheka", [ph])
     teacher_list = [tea1, tea2, tea3]
-    class1 = Class("1A", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(ph, 5, tea3)], 5)
-    class2 = Class("1B", [ClassLesson(math, 5, tea1), ClassLesson(rus, 5, tea2), ClassLesson(ph, 5, tea3)], 5)
+    class1 = Class("1A", [LessonOfClass(math, 5, tea1), LessonOfClass(rus, 5, tea2), LessonOfClass(ph, 5, tea3)], 5)
+    class2 = Class("1B", [LessonOfClass(math, 5, tea1), LessonOfClass(rus, 5, tea2), LessonOfClass(ph, 5, tea3)], 5)
     class_list = [class1, class2]
     compose(class_list, teacher_list)
     print(class1.get_schedule())

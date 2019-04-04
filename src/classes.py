@@ -7,6 +7,13 @@ class Container:
         self.__teacher_list = []
         self.__lessons = []
 
+    def clear_schedule(self):
+        for class_ in self.get_classes():
+            class_.clear_schedule()
+            class_.backup_lessons()
+        for teacher in self.get_teachers():
+            teacher.clear_schedule()
+
     def get_teachers(self):
         return self.__teacher_list
 
@@ -66,6 +73,9 @@ class Teacher:
     def get_schedule(self):
         return self.__schedule
 
+    def clear_schedule(self):
+        self.__schedule.clear()
+
     def get_lesson_list(self):
         return self.__lesson_list
 
@@ -90,7 +100,7 @@ class Lesson:
         return self.__name
 
 
-class ClassLesson:
+class LessonOfClass:
     def __init__(self, lesson, number_per_week, teacher):
         self.__lesson = lesson
         self.__number_per_week = number_per_week
