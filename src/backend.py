@@ -1,3 +1,4 @@
+from copy import copy
 from math import ceil
 from random import shuffle
 from src.config import Configuration
@@ -9,8 +10,11 @@ def compose(class_list, teacher_list):
     for current_class in class_list:
         for tmp_teacher in teacher_list:
             tmp_teacher.backup_schedule_save()
+        attempt_counter = 0
         while not compose_class(current_class):
-            print("Failed scheduling attempt for " + current_class.get_name())
+            attempt_counter += 1
+            if attempt_counter > Configuration.max_attempts_of_scheduling_for_class:
+                raise RuntimeError
             current_class.backup_lessons()
             current_class.clear_schedule()
             for tmp_teacher in teacher_list:
@@ -40,7 +44,7 @@ def calculate_number_of_lessons_per_day(current_class):
 
 def compose_lesson(current_class):
     lesson_list = []
-    iterable = current_class.get_lesson_list()
+    iterable = copy(current_class.get_lesson_list())
     shuffle(iterable)
     for lesson in iterable:
         if lesson in current_class.get_schedule()[-1] or not lesson.get_number_per_week():

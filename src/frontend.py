@@ -46,9 +46,11 @@ class MainWindow(QtWidgets.QMainWindow, design_main.Ui_MainWindow):
                 compose(container.get_classes(), container.get_teachers())
                 break
             except KeyboardInterrupt:
-                print("Interrupted, restart")
-                container.clear_schedule()
-        save(QtWidgets.QFileDialog.getExistingDirectory(self, "Выберите папку"),container.get_classes(),container.get_teachers())
+                print("Ручной перезапуск")
+            except RuntimeError:
+                print("Не удалось составить расписание, перезапуск")
+            container.clear_schedule()
+        save(QtWidgets.QFileDialog.getExistingDirectory(self, "Выберите папку"), container.get_classes(), container.get_teachers())
 
 
 class DialogLesson(QtWidgets.QDialog, design_lesson.Ui_DialogLesson):
@@ -208,8 +210,12 @@ class DialogAuthor(QtWidgets.QDialog,design_author.Ui_DialogAuthor):
         self.setupUi(self)
 
 
-if __name__ == '__main__':
+def main():
     app = QtWidgets.QApplication(sys.argv)
     window = MainWindow()
     window.show()
     app.exec()
+
+
+if __name__ == '__main__':
+    main()
